@@ -11,16 +11,26 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
     
-    - name: Set up Python
+    - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
     
+    - name: Cache pip packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
     - name: Install dependencies
       run: |
         cd backend
+        python -m pip install --upgrade pip
         pip install -r requirements.txt -r requirements-test.txt
     
     - name: Run tests
@@ -28,6 +38,12 @@ jobs:
         DATABASE_URL: sqlite:///./test.db
         SECRET_KEY: test-secret-key
         OPENAI_API_KEY: sk-test
+        PYTHONPATH: /home/runner/work/ai-money-brain/ai-money-brain/backend
       run: |
         cd backend
-        pytest tests/test_health.py -v
+        pytest tests/test_health.py -v --tb=short
+    
+    - name: Test summary
+      if: always()
+      run: |
+        echo "✅ Tests completed"
