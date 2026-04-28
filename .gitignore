@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Node
+node_modules/
+.next/
+out/
+build/
+dist/
+*.log
+npm-debug.log*
+.DS_Store
+
+# Environment variables (CRITICAL - never commit secrets!)
+.env
+.env.local
+.env*.local
+backend/.env
+frontend/.env.local
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files (optional)
+backend/test_*.py
+backend/check_tables.py
+
+# Logs
+*.log
+.cache/
+coverage/
+
+# Docker volumes
+postgres_data/
