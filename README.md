@@ -1,8 +1,13 @@
+# 🧠 AI Money Brain
+
+> AI-powered personal finance copilot that analyzes spending, detects patterns, and converts insights into automated actions.
+
+[![Backend Tests](https://github.com/MohammedAhmeduddin/ai-money-brain/actions/workflows/backend-tests.yml/badge.svg)](https://github.com/MohammedAhmeduddin/ai-money-brain/actions/workflows/backend-tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-009688.svg?style=flat-square&logo=FastAPI&logoColor=white)](https://fastapi.tiangolo.com)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192.svg?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4-412991.svg?style=flat-square&logo=openai&logoColor=white)](https://openai.com/)
-
----
 
 ---
 
