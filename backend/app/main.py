@@ -1,3 +1,5 @@
+# backend/app/main.py
+
 """
 FastAPI application entry point
 """
@@ -5,22 +7,25 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from pathlib import Path
-import os
 
 from app.core.config import settings
 from app.db.database import engine
-from app.api.v1 import auth, transactions
-from app.services.csv_parser import CSVParser  # Add this import
+from app.api.v1 import auth, transactions, dashboard
+from app.services.csv_parser import CSVParser
 
-# Create FastAPI app
+# ─── App Instance ────────────────────────────────────────────────────────────
+
 app = FastAPI(
     title=settings.APP_NAME,
-    description="AI-powered personal finance copilot",
-    version="1.0.0",
-    debug=settings.DEBUG
+    description="AI-powered personal finance copilot — analyze spending, detect patterns, and get AI insights.",
+    version="0.3.0",
+    debug=settings.DEBUG,
+    docs_url="/docs",
+    redoc_url="/redoc",
 )
 
-# Configure CORS
+# ─── CORS Middleware ─────────────────────────────────────────────────────────
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
@@ -29,28 +34,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(auth.router, prefix="/api/v1")
+# ─── Routers ─────────────────────────────────────────────────────────────────
+
+app.include_router(auth.router,         prefix="/api/v1")
 app.include_router(transactions.router, prefix="/api/v1")
+app.include_router(dashboard.router,    prefix="/api/v1")
 
+# ─── Root ────────────────────────────────────────────────────────────────────
 
-@app.get("/")
+@app.get("/", tags=["Health"])
 async def root():
-    """Health check endpoint"""
+    """Root endpoint — confirms app is running."""
     return {
-        "app": settings.APP_NAME,
-        "status": "running",
-        "environment": settings.ENVIRONMENT
+        "app":         settings.APP_NAME,
+        "version":     "0.3.0",
+        "status":      "running",
+        "environment": settings.ENVIRONMENT,
+        "docs":        "/docs",
     }
 
+# ─── Health Check ────────────────────────────────────────────────────────────
 
-@app.get("/health")
+@app.get("/health", tags=["Health"])
 async def health_check():
-    """Detailed health check"""
-    # Test database connection (skip in test mode)
+    """Detailed health check — database + AI service status."""
+
     db_status = "disconnected"
 
-    # Skip DB check if using SQLite (test environment)
     if "sqlite" in settings.DATABASE_URL.lower():
         db_status = "skipped (test mode)"
     else:
@@ -61,25 +71,33 @@ async def health_check():
         except Exception as e:
             db_status = f"error: {str(e)}"
 
+    ai_status = (
+        "configured"
+        if settings.OPENAI_API_KEY and settings.OPENAI_API_KEY != "sk-your-key-here"
+        else "not configured"
+    )
+
     return {
-        "status": "healthy" if "connected" in db_status or "skipped" in db_status else "degraded",
-        "database": db_status,
-        "ai_service": "configured" if settings.OPENAI_API_KEY != "sk-your-key-here" else "not configured"
+        "status":     "healthy" if "connected" in db_status or "skipped" in db_status else "degraded",
+        "version":    "0.3.0",
+        "database":   db_status,
+        "ai_service": ai_status,
     }
 
+# ─── Multi-Bank Test ─────────────────────────────────────────────────────────
 
-@app.get("/test-multi-bank")  # Changed to GET for easier browser testing
+@app.get("/test-multi-bank", tags=["Dev Tools"])
 async def test_multi_bank():
-    """Test endpoint to verify all bank formats work"""
-    parser = CSVParser()  # Initialize parser
-    results = {}
+    """Dev endpoint — verify all bank CSV formats parse correctly."""
+
+    parser        = CSVParser()
+    results       = {}
     fixtures_path = Path("tests/fixtures")
 
-    # Check if fixtures directory exists
     if not fixtures_path.exists():
         return {
             "error": "Fixtures directory not found",
-            "path": str(fixtures_path.absolute())
+            "path":  str(fixtures_path.absolute()),
         }
 
     for csv_file in fixtures_path.glob("sample_*.csv"):
@@ -88,22 +106,24 @@ async def test_multi_bank():
             with open(csv_file) as f:
                 transactions = parser.parse(f.read())
                 results[bank_name] = {
-                    "status": "success",
-                    "count": len(transactions),
-                    "sample": transactions[0] if transactions else None,
-                    "all_transactions": transactions  # Include all for demo
+                    "status":           "success",
+                    "count":            len(transactions),
+                    "sample":           transactions[0] if transactions else None,
+                    "all_transactions": transactions,
                 }
         except Exception as e:
             results[bank_name] = {
                 "status": "error",
-                "error": str(e)
+                "error":  str(e),
             }
 
     return {
         "total_banks_tested": len(results),
-        "results": results
+        "results":            results,
     }
 
+
+# ─── Entry Point ─────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     import uvicorn
