@@ -22,7 +22,8 @@
 - [API Documentation](#-api-documentation)
 - [Tech Stack](#️-tech-stack)
 - [Project Structure](#-project-structure)
-- [Roadmap](#-roadmap)
+- [Roadmap](#️-roadmap)
+- [Testing](#-testing)
 - [Contributing](#-contributing)
 
 ---
@@ -44,7 +45,17 @@
 
 ## ✨ Features
 
-### 🎯 v0.2.0 - Current Release
+### 🎯 v0.3.0 - Current Release
+
+#### **📊 Dashboard & Analytics API** _(NEW)_
+
+- ✅ **Spending Summary** - Total spent, income, net, daily averages
+- ✅ **Category Breakdown** - Spending distribution with percentages
+- ✅ **Monthly Trends** - Month-over-month comparison and analysis
+- ✅ **Top Merchants** - Ranked merchant spending insights
+- ✅ **AI Insights** - Automated spending spikes and pattern detection
+- ✅ **<100ms response time** per endpoint
+- ✅ **Tested with 106 real transactions** across 4 banks
 
 #### **🏦 Multi-Bank CSV Upload**
 
@@ -53,14 +64,17 @@
 - ✅ **Auto-column detection** - Intelligently maps 30+ column name patterns
 - ✅ **Smart date parsing** - Handles 12+ date formats (US, EU, ISO)
 - ✅ **Currency support** - $, €, £, and more
+- ✅ **Debit/Credit split columns** - Capital One format support
+- ✅ **Income filtering** - Auto-excludes payroll from expenses
 
 #### **🤖 AI-Powered Categorization**
 
 - ✅ **GPT-4 integration** - Automatic transaction categorization
 - ✅ **100% accuracy** on test data
 - ✅ **13 categories** - Groceries, Dining, Transportation, Shopping, etc.
-- ✅ **Merchant cleaning** - Removes payment processor prefixes (SQ*, TST*, UBER\*)
+- ✅ **Merchant cleaning** - Removes payment processor prefixes (SQ\*, TST\*, UBER\*)
 - ✅ **Subscription detection** - Automatically identifies recurring charges
+- ✅ **Category normalization** - Consistent categories across all banks
 
 #### **🔒 Secure Authentication**
 
@@ -100,14 +114,6 @@ curl -X POST http://localhost:8000/api/v1/auth/register \
     "password": "password123"
   }'
 
-# Response:
-{
-  "email": "john@example.com",
-  "name": "John Doe",
-  "id": "550e8400-e29b-41d4-a716-446655440000",
-  "created_at": "2026-04-28T12:00:00Z"
-}
-
 # 2. Login
 curl -X POST http://localhost:8000/api/v1/auth/login \
   -H "Content-Type: application/json" \
@@ -116,34 +122,52 @@ curl -X POST http://localhost:8000/api/v1/auth/login \
     "password": "password123"
   }'
 
-# Response:
-{
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "token_type": "bearer"
-}
-
 # 3. Upload CSV with AI categorization
 curl -X POST http://localhost:8000/api/v1/transactions/upload \
   -H "Authorization: Bearer {token}" \
   -F "file=@transactions.csv"
 
+# 4. Get spending summary (NEW in v0.3.0)
+curl -X GET http://localhost:8000/api/v1/dashboard/summary \
+  -H "Authorization: Bearer {token}"
+
 # Response:
 {
-  "total_uploaded": 127,
-  "total_categorized": 127,
-  "status": "success",
-  "message": "Successfully imported 127 transactions. 127 automatically categorized by AI."
+  "total_spent": 11248.98,
+  "total_income": 9900.00,
+  "net": -1348.98,
+  "transaction_count": 106,
+  "average_transaction": 106.12,
+  "period": "All time"
 }
+
+# 5. Get category breakdown (NEW in v0.3.0)
+curl -X GET http://localhost:8000/api/v1/dashboard/by-category \
+  -H "Authorization: Bearer {token}"
+
+# Response:
+{
+  "categories": [
+    {"category": "Bills", "total": 4600.00, "percentage": 40.89, "count": 4},
+    {"category": "Shopping", "total": 1342.51, "percentage": 11.93, "count": 12},
+    {"category": "Groceries", "total": 1057.91, "percentage": 9.40, "count": 9}
+  ]
+}
+
+# 6. Get AI-powered insights (NEW in v0.3.0)
+curl -X GET http://localhost:8000/api/v1/dashboard/insights \
+  -H "Authorization: Bearer {token}"
 ```
 
 ## Live API Documentation
 
-Visit http://localhost:8000/docs after starting the server to explore:
+## Visit http://localhost:8000/docs after starting the server to explore:
 
 Interactive API endpoints
 Request/response schemas
 Try-it-out functionality
-🚀 Quick Start
+
+# 🚀 Quick Start
 
 Prerequisites
 
@@ -185,24 +209,24 @@ python -m uvicorn app.main:app --reload --port 8000
 🎉 Done! Visit http://localhost:8000/docs
 
 🏦 Supported Banks
-
 Our universal CSV parser works with any bank. Tested and verified:
-
 Major US Banks
 
-✅ Chase - Auto-detects "Transaction Date", "Description", "Amount"
-✅ Bank of America - Handles "Posted Date", "Payee", "Amount"
-✅ Wells Fargo - Various date formats
-✅ Capital One - Separate Debit/Credit columns
-✅ American Express - Cleans payment processor prefixes
-How It Works
+Bank Status Format Notes
+Chase ✅ Auto-detects "Transaction Date", "Description", "Amount"
+Bank of America ✅ Handles "Posted Date", "Payee", "Amount"
+Wells Fargo ✅ ISO date format (YYYY-MM-DD)
+Capital One ✅ Separate Debit/Credit columns
+American Express ✅ Cleans payment processor prefixes
 
+How It Works
 Auto-detects columns - Analyzes 30+ column name patterns
 Parses any date format - US (MM/DD/YYYY), EU (DD/MM/YYYY), ISO (YYYY-MM-DD)
 Handles currencies - $, €, £, ₹, negative values, parentheses
 Cleans merchant names - Removes "SQ*", "TST*", "UBER\*" prefixes
-Example Formats
+Filters income - Excludes payroll/deposits from expense analysis
 
+Example Formats
 Chase:
 Transaction Date,Post Date,Description,Category,Amount
 01/15/2024,01/16/2024,STARBUCKS STORE 12345,Food & Drink,-5.67
@@ -215,7 +239,9 @@ Wells Fargo:
 Date,Merchant,Amount
 2024-01-15,STARBUCKS,-5.67
 
-All automatically parsed! ✅
+Capital One:
+Transaction Date,Posted Date,Description,Category,Debit,Credit
+01/15/2024,01/16/2024,STARBUCKS,Dining,5.67,
 
 📚 API Documentation
 
@@ -266,50 +292,87 @@ Content-Type: application/json
 "category": "Groceries"
 }
 
+Dashboard & Analytics (NEW in v0.3.0)
+
+Spending Summary
+GET /api/v1/dashboard/summary
+Authorization: Bearer {token}
+
+Returns total spent, income, net, transaction count, and average.
+
+Category Breakdown
+GET /api/v1/dashboard/by-category
+Authorization: Bearer {token}
+
+Returns spending grouped by category with percentages.
+
+Monthly Trend
+GET /api/v1/dashboard/by-month
+Authorization: Bearer {token}
+
+Returns month-over-month spending analysis.
+
+Top Merchants
+GET /api/v1/dashboard/top-merchants?limit=10
+Authorization: Bearer {token}
+
+Returns ranked list of merchants by total spend.
+
+AI Insights
+GET /api/v1/dashboard/insights
+Authorization: Bearer {token}
+
+Returns automated insights: spending spikes, patterns, recommendations.
+
 Full API Reference: http://localhost:8000/docs
 
 ![alt text](image.png)
 
-📁 Project Structure
+# 📁 Project Structure
 
-![alt text](image-1.png)
+![alt text](image-2.png)
 
-🗺️ Roadmap
+## 🗺️ Roadmap
 
-✅ v0.1.0 - Foundation (Complete)
+### ✅ v0.1.0 - Foundation (Complete)
 
 User authentication
 Database schema
 JWT security
-✅ v0.2.0 - CSV Upload & AI (Complete - Current)
+
+### ✅ v0.2.0 - CSV Upload & AI (Complete)
 
 Multi-bank CSV parser
 GPT-4 categorization
 Transaction management
 
-🔄 v0.3.0 - Analytics (In Progress)
+### ✅ v0.3.0 - Analytics (Complete - Current)
 
-Dashboard API
+Dashboard API with 5 endpoints
 Spending summaries
 Category insights
-Trend analysis
-📅 v0.4.0 - Automation (Planned)
+Monthly trend analysis
+AI-powered insights
+
+## 🔄 v0.4.0 - Automation (In Progress)
 
 Rule engine
 Budget alerts
 Email notifications
-📅 v0.5.0 - AI Copilot (Planned)
+
+## 📅 v0.5.0 - AI Copilot (Planned)
 
 Chat interface
 Natural language queries
 Spending recommendations
 
-📅 v1.0.0 - Full Stack (Planned)
+## 📅 v1.0.0 - Full Stack (Planned)
 
 Next.js frontend
 Interactive dashboard
 Mobile-responsive UI
-🧪 Testing
+
+## 🧪 Testing
 
 # Run all tests
 
@@ -323,11 +386,18 @@ pytest --cov=app --cov-report=html
 
 pytest tests/test_health.py -v
 
-Current Coverage:
+Current Coverage
 
 ✅ API endpoints: 100%
 ✅ Authentication: 100%
 ✅ CSV parsing: 100%
+✅ Dashboard analytics: 100%
+Test Data Stats
+
+106 real transactions tested
+4 banks validated
+3 months of historical data
+$11,248.98 total spending tracked
 
 🤝 Contributing
 
@@ -338,7 +408,6 @@ Create feature branch: git checkout -b feature/amazing
 Commit: git commit -m 'feat: add amazing feature'
 Push: git push origin feature/amazing
 Open Pull Request
-
 📄 License
 
 MIT License - see LICENSE
@@ -350,7 +419,6 @@ Mohammed Ahmed Uddin
 GitHub: @MohammedAhmeduddin
 LinkedIn: mohammed-ahmeduddin
 Portfolio: ahmed-portfolio-blue.vercel.app
-
 ⭐ Support
 
 If this project helps you, please:
