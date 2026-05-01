@@ -10,6 +10,14 @@ from app.schemas.user import (
     Token,
     TokenData,
 )
+from app.schemas.transaction import (
+    TransactionBase,
+    TransactionCreate,
+    TransactionUpdate,
+    TransactionResponse,
+    TransactionListResponse,
+    CSVUploadResponse,
+)
 
 __all__ = [
     "UserBase",
@@ -19,4 +27,10 @@ __all__ = [
     "UserInDB",
     "Token",
     "TokenData",
+    "TransactionBase",
+    "TransactionCreate",
+    "TransactionUpdate",
+    "TransactionResponse",
+    "TransactionListResponse",
+    "CSVUploadResponse",
 ]
