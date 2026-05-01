@@ -1,0 +1,6 @@
+Transaction Date,Post Date,Description,Category,Type,Amount,Memo
+01/15/2024,01/16/2024,STARBUCKS STORE 12345,Food & Drink,Sale,-5.67,
+01/15/2024,01/16/2024,SHELL OIL 67890123456,Gas,Sale,-45.00,
+01/16/2024,01/17/2024,NETFLIX.COM,Entertainment,Sale,-15.99,
+01/17/2024,01/18/2024,AMAZON.COM*AB1C23DE,Shopping,Sale,-89.42,
+01/20/2024,01/21/2024,WHOLE FOODS MKT,Groceries,Sale,-67.89,
