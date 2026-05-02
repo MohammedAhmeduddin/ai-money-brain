@@ -1,6 +1,6 @@
-# 🎯 v0.3.1: Test Infrastructure Milestone
+# 🎯 [v0.3.1] - 2026-05-02
 
-## 🏆 Major Achievement: 92% Code Coverage
+## Test Infrastructure Milestone
 
 Establishes production-grade testing infrastructure with comprehensive test suite covering all v0.3.0 features.
 
@@ -14,6 +14,16 @@ Establishes production-grade testing infrastructure with comprehensive test suit
 | **Statements Covered** | 830 / 905  |
 
 ## 🧪 Test Categories
+
+- `tests/integration/test_auth_api.py` — JWT, registration, login flows
+- `tests/integration/test_transactions_api.py` — CRUD + upload
+- `tests/integration/test_dashboard_api.py` — All v0.3.0 endpoints
+- `tests/integration/test_ai_api.py` — AI categorization
+- `tests/unit/test_csv_parser.py` — Multi-bank edge cases
+- `tests/unit/test_categorization.py` — AI mocking
+- `tests/unit/test_validators.py` — Pydantic + JWT validation
+- `tests/unit/test_db_base.py` — Model registration
+- `tests/unit/test_rule_engine.py` — Scaffolds for v0.4.0
 
 ### Integration Tests
 
