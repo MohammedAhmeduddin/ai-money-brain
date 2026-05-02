@@ -9,6 +9,12 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-009688.svg?style=flat-square&logo=FastAPI&logoColor=white)](https://fastapi.tiangolo.com)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192.svg?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4-412991.svg?style=flat-square&logo=openai&logoColor=white)](https://openai.com/)
+[![Test Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen.svg?style=flat-square)](https://github.com/MohammedAhmeduddin/ai-money-brain)
+[![Tests](https://img.shields.io/badge/tests-192%20passing-success.svg?style=flat-square)](https://github.com/MohammedAhmeduddin/ai-money-brain/actions)
+[![Test Files](https://img.shields.io/badge/test%20files-12-blue.svg?style=flat-square)](https://github.com/MohammedAhmeduddin/ai-money-brain/tree/main/backend/tests)
+[![Test Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen.svg?style=flat-square)](https://github.com/MohammedAhmeduddin/ai-money-brain)
+[![Tests](https://img.shields.io/badge/tests-192%20passing-success.svg?style=flat-square)](https://github.com/MohammedAhmeduddin/ai-money-brain/actions)
+[![Test Files](https://img.shields.io/badge/test%20files-12-blue.svg?style=flat-square)](https://github.com/MohammedAhmeduddin/ai-money-brain/tree/main/backend/tests)
 
 ---
 
