@@ -342,47 +342,62 @@ Full API Reference: http://localhost:8000/docs
 
 ### ✅ v0.1.0 - Foundation (Complete)
 
-User authentication
-Database schema
-JWT security
+- User authentication with JWT
+- PostgreSQL database schema
+- Bcrypt password hashing
+- FastAPI + SQLAlchemy + Alembic setup
 
 ### ✅ v0.2.0 - CSV Upload & AI (Complete)
 
-Multi-bank CSV parser
-GPT-4 categorization
-Transaction management
+- Multi-bank CSV parser (Chase, BofA, Wells Fargo, Capital One)
+- GPT-4 powered transaction categorization
+- Full transaction CRUD API
+- Auto-detection of 30+ column patterns
 
-### ✅ v0.3.0 - Analytics (Complete - Current)
+### ✅ v0.3.0 - Analytics (Complete)
 
-Dashboard API with 5 endpoints
-Spending summaries
-Category insights
-Monthly trend analysis
-AI-powered insights
+- 5 dashboard API endpoints
+- Spending summaries and category breakdown
+- Monthly trend analysis
+- Top merchants ranking
+- AI-powered insights
 
 ### ✅ v0.3.1 - Test Infrastructure (Complete)
 
 - 92% code coverage
-- 192 passing tests
-- Production-ready quality
+- 192 passing tests across 12 files
+- Integration + unit + e2e test scaffolds
+- Mocked OpenAI for cost-free testing
 
-## 🔄 v0.4.0 - Automation (In Progress)
+### 📅 v0.4.0 - Automation (Planned)
 
-Rule engine
-Budget alerts
-Email notifications
+- Rule engine for budget thresholds
+- Budget alerts and notifications
+- Email integration (SendGrid/SES)
+- Recurring transaction detection improvements
 
-## 📅 v0.5.0 - AI Copilot (Planned)
+### 📅 v0.5.0 - AI Copilot (Planned)
 
-Chat interface
-Natural language queries
-Spending recommendations
+- Conversational chat interface
+- Natural language spending queries
+- Personalized financial recommendations
+- Context-aware AI responses
 
-## 📅 v1.0.0 - Full Stack (Planned)
+### 📅 v1.0.0 - Full Stack (Planned)
 
-Next.js frontend
-Interactive dashboard
-Mobile-responsive UI
+- Next.js 14 frontend with TypeScript
+- Interactive dashboard with Recharts
+- CSV drag-and-drop upload UI
+- Mobile-responsive design
+- Real-time analytics
+
+### 📅 v2.0.0 - Advanced Features (Future)
+
+- Plaid integration for real-time bank sync
+- Predictive spending analytics
+- Goal tracking and savings recommendations
+- Multi-currency support
+- React Native mobile app
 
 ## 🧪 Testing
 
