@@ -2,6 +2,16 @@
 
 > **AI-powered personal finance copilot with multi-bank CSV support, GPT-4 categorization, and intelligent spending insights.**
 
+## 🌐 Live Demo
+
+🚀 **Live API**: https://ai-money-brain-api.onrender.com
+📖 **Interactive Docs**: https://ai-money-brain-api.onrender.com/docs
+
+> ⚠️ **Free tier sleeps after 15 minutes of inactivity.**
+> First request may take 30-60 seconds to wake up.
+
+[![Live Demo](https://img.shields.io/badge/demo-live-success?style=flat-square&logo=render)](https://ai-money-brain-api.onrender.com/docs)
+[![API Status](https://img.shields.io/website?url=https%3A%2F%2Fai-money-brain-api.onrender.com%2Fhealth&style=flat-square)](https://ai-money-brain-api.onrender.com/health)
 [![Backend Tests](https://github.com/MohammedAhmeduddin/ai-money-brain/actions/workflows/backend-tests.yml/badge.svg)](https://github.com/MohammedAhmeduddin/ai-money-brain/actions/workflows/backend-tests.yml)
 [![Release](https://img.shields.io/github/v/release/MohammedAhmeduddin/ai-money-brain?style=flat-square)](https://github.com/MohammedAhmeduddin/ai-money-brain/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
