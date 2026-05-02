@@ -360,6 +360,12 @@ Category insights
 Monthly trend analysis
 AI-powered insights
 
+### ✅ v0.3.1 - Test Infrastructure (Complete)
+
+- 92% code coverage
+- 192 passing tests
+- Production-ready quality
+
 ## 🔄 v0.4.0 - Automation (In Progress)
 
 Rule engine
