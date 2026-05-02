@@ -59,3 +59,15 @@ coverage/
 
 # Docker volumes
 postgres_data/
+
+# Test artifacts
+backend/.env.test
+backend/test_output.txt
+backend/htmlcov/
+.coverage
+
+# Test artifacts
+backend/.env.test
+backend/test_output.txt
+backend/htmlcov/
+.coverage
